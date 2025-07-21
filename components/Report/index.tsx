@@ -1,30 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
-import { useState, useEffect } from "react";
+import { useGetReport } from "@/app/hooks/useGetReport/useGetReport";
+import {
+  ArrowLeft,
+  Award,
+  Brain,
+  Briefcase,
+  Calendar,
+  Download,
+  GraduationCap,
+  MapPin,
+  Share2,
+  TrendingUp,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Progress } from "@/components/ui/progress";
-import {
-  Brain,
-  TrendingUp,
-  MapPin,
-  Calendar,
-  GraduationCap,
-  Award,
-  Briefcase,
-  ArrowLeft,
-  Download,
-  Share2,
-} from "lucide-react";
+} from "../ui/card";
+import { Badge } from "../ui/badge";
+import { Progress } from "../ui/progress";
+import { Separator } from "../ui/separator";
 
 interface CVAnalysis {
   ruolo: string;
@@ -44,52 +45,57 @@ interface CVAnalysis {
   confidenceScore: number;
 }
 
-export default function AnalisiPage() {
-  const [analysis, setAnalysis] = useState<CVAnalysis | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(true);
+const mockValue: CVAnalysis = {
+  ruolo: "Sviluppatore Full Stack",
+  settore: "Tecnologia",
+  esperienza: Math.floor(Math.random() * 8) + 1,
+  localita: "Milano, Italia",
+  livello: "Middle",
+  titoloStudio: "Laurea in Informatica",
+  competenze: ["JavaScript", "React", "Node.js", "Python", "SQL", "Git"],
+  certificazioni: ["AWS Certified", "Google Cloud"],
+  ralStimata: {
+    min: 35000,
+    max: 55000,
+    media: 45000,
+  },
+  fileName: "",
+  confidenceScore: Math.floor(Math.random() * 20) + 80,
+};
+
+export function Report({ id }: { id: string }) {
+  const { getReport, loading, report } = useGetReport(id);
+  const [mockAnalysis, setMockAnalysis] = useState<CVAnalysis | null>(
+    mockValue
+  );
+  console.log({ report });
+
   const router = useRouter();
 
   useEffect(() => {
-    const cvFileData = sessionStorage.getItem("cvFile");
+    getReport();
+  }, []);
 
-    if (!cvFileData) {
-      router.push("/");
-      return;
+  useEffect(() => {
+    if (report) {
+      setMockAnalysis((prev) => ({
+        ...prev,
+        ruolo: mockValue.ruolo,
+        settore: mockValue.settore,
+        esperienza: mockValue.esperienza,
+        localita: mockValue.localita,
+        livello: mockValue.livello,
+        titoloStudio: mockValue.titoloStudio,
+        competenze: mockValue.competenze,
+        certificazioni: mockValue.certificazioni,
+        ralStimata: mockValue.ralStimata,
+        confidenceScore: mockValue.confidenceScore,
+        fileName: report.fileName,
+      }));
     }
+  }, [report]);
 
-    const fileInfo = JSON.parse(cvFileData);
-
-    // Simulazione dell'analisi
-    const analyzeCV = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-
-      // Analisi simulata basata sul nome del file o contenuto
-      const mockAnalysis: CVAnalysis = {
-        ruolo: "Sviluppatore Full Stack",
-        settore: "Tecnologia",
-        esperienza: Math.floor(Math.random() * 8) + 1,
-        localita: "Milano, Italia",
-        livello: "Middle",
-        titoloStudio: "Laurea in Informatica",
-        competenze: ["JavaScript", "React", "Node.js", "Python", "SQL", "Git"],
-        certificazioni: ["AWS Certified", "Google Cloud"],
-        ralStimata: {
-          min: 35000,
-          max: 55000,
-          media: 45000,
-        },
-        fileName: fileInfo.name,
-        confidenceScore: Math.floor(Math.random() * 20) + 80,
-      };
-
-      setAnalysis(mockAnalysis);
-      setIsAnalyzing(false);
-    };
-
-    analyzeCV();
-  }, [router]);
-
-  if (isAnalyzing) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <Card className="w-full max-w-md">
@@ -123,13 +129,13 @@ export default function AnalisiPage() {
     );
   }
 
-  if (!analysis) {
+  if (!mockAnalysis) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardContent className="p-8 text-center">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Errore nell'analisi
+              Errore nell&apos;analisi
             </h3>
             <p className="text-gray-600 mb-4">
               Non è stato possibile analizzare il CV
@@ -167,7 +173,9 @@ export default function AnalisiPage() {
                   <h1 className="text-2xl font-bold text-gray-900">
                     Analisi Completata
                   </h1>
-                  <p className="text-sm text-gray-600">{analysis.fileName}</p>
+                  <p className="text-sm text-gray-600">
+                    {mockAnalysis.fileName}
+                  </p>
                 </div>
               </div>
             </div>
@@ -200,15 +208,15 @@ export default function AnalisiPage() {
               <CardContent>
                 <div className="text-center">
                   <div className="text-4xl font-bold mb-2">
-                    €{analysis.ralStimata.media.toLocaleString()}
+                    €{mockAnalysis.ralStimata.media.toLocaleString()}
                   </div>
                   <div className="text-green-100 mb-4">
-                    Range: €{analysis.ralStimata.min.toLocaleString()} - €
-                    {analysis.ralStimata.max.toLocaleString()}
+                    Range: €{mockAnalysis.ralStimata.min.toLocaleString()} - €
+                    {mockAnalysis.ralStimata.max.toLocaleString()}
                   </div>
                   <div className="bg-white/20 rounded-full p-3">
                     <div className="text-sm">
-                      Basato su {analysis.esperienza} anni di esperienza
+                      Basato su {mockAnalysis.esperienza} anni di esperienza
                     </div>
                   </div>
                 </div>
@@ -227,10 +235,13 @@ export default function AnalisiPage() {
                       Confidence Score
                     </span>
                     <span className="font-semibold">
-                      {analysis.confidenceScore}%
+                      {mockAnalysis.confidenceScore}%
                     </span>
                   </div>
-                  <Progress value={analysis.confidenceScore} className="h-2" />
+                  <Progress
+                    value={mockAnalysis.confidenceScore}
+                    className="h-2"
+                  />
                   <p className="text-xs text-gray-500">
                     Basato sulla completezza e chiarezza delle informazioni nel
                     CV
@@ -258,10 +269,10 @@ export default function AnalisiPage() {
                     <div>
                       <div className="text-sm text-gray-600">Ruolo Attuale</div>
                       <div className="font-semibold text-lg">
-                        {analysis.ruolo}
+                        {mockAnalysis.ruolo}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {analysis.settore}
+                        {mockAnalysis.settore}
                       </div>
                     </div>
                   </div>
@@ -273,19 +284,19 @@ export default function AnalisiPage() {
                     <div>
                       <div className="text-sm text-gray-600">Esperienza</div>
                       <div className="font-semibold text-lg">
-                        {analysis.esperienza} anni
+                        {mockAnalysis.esperienza} anni
                       </div>
                       <Badge
                         variant={
-                          analysis.livello === "Senior"
+                          mockAnalysis.livello === "Senior"
                             ? "default"
-                            : analysis.livello === "Middle"
+                            : mockAnalysis.livello === "Middle"
                             ? "secondary"
                             : "outline"
                         }
                         className="mt-1"
                       >
-                        {analysis.livello}
+                        {mockAnalysis.livello}
                       </Badge>
                     </div>
                   </div>
@@ -297,7 +308,7 @@ export default function AnalisiPage() {
                     <div>
                       <div className="text-sm text-gray-600">Località</div>
                       <div className="font-semibold text-lg">
-                        {analysis.localita}
+                        {mockAnalysis.localita}
                       </div>
                     </div>
                   </div>
@@ -309,7 +320,7 @@ export default function AnalisiPage() {
                     <div>
                       <div className="text-sm text-gray-600">Formazione</div>
                       <div className="font-semibold text-lg">
-                        {analysis.titoloStudio}
+                        {mockAnalysis.titoloStudio}
                       </div>
                     </div>
                   </div>
@@ -323,7 +334,7 @@ export default function AnalisiPage() {
                     Competenze Tecniche
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {analysis.competenze.map((skill, index) => (
+                    {mockAnalysis.competenze.map((skill: any, index: any) => (
                       <Badge
                         key={index}
                         variant="secondary"
@@ -342,17 +353,19 @@ export default function AnalisiPage() {
                     Certificazioni
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {analysis.certificazioni.length > 0 ? (
-                      analysis.certificazioni.map((cert, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="px-3 py-1"
-                        >
-                          <Award className="h-3 w-3 mr-1" />
-                          {cert}
-                        </Badge>
-                      ))
+                    {mockAnalysis.certificazioni.length > 0 ? (
+                      mockAnalysis.certificazioni.map(
+                        (cert: any, index: any) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="px-3 py-1"
+                          >
+                            <Award className="h-3 w-3 mr-1" />
+                            {cert}
+                          </Badge>
+                        )
+                      )
                     ) : (
                       <span className="text-gray-500 text-sm">
                         Nessuna certificazione rilevata
@@ -368,7 +381,7 @@ export default function AnalisiPage() {
               <CardHeader>
                 <CardTitle>Suggerimenti per Migliorare</CardTitle>
                 <CardDescription>
-                  Consigli basati sull'analisi del tuo profilo
+                  Consigli basati sull&apos;analisi del tuo profilo
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -416,7 +429,7 @@ export default function AnalisiPage() {
           <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-0">
             <CardContent className="py-8">
               <h3 className="text-2xl font-bold mb-4">
-                Soddisfatto dell'analisi?
+                Soddisfatto dell&apos;analisi?
               </h3>
               <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
                 Condividi CV Scanner con i tuoi colleghi e aiutali a scoprire il
@@ -425,7 +438,7 @@ export default function AnalisiPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="secondary" size="lg">
                   <Share2 className="h-5 w-5 mr-2" />
-                  Condividi l'app
+                  Condividi l&apos;app
                 </Button>
                 <Button
                   variant="outline"
@@ -447,7 +460,7 @@ export default function AnalisiPage() {
                 <strong>Disclaimer:</strong> Le stime sono indicative e basate
                 su algoritmi di machine learning. Non costituiscono una
                 consulenza professionale e possono variare in base a numerosi
-                fattori non considerati nell'analisi automatica.
+                fattori non considerati nell&apos;analisi automatica.
               </p>
             </CardContent>
           </Card>

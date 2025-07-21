@@ -1,0 +1,19 @@
+import { analyze } from "@/app/services/analyze";
+import { NextResponse } from "next/server";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const resultMap = new Map<string, any>();
+
+export async function POST(req: Request) {
+  const { file, fileName } = await req.json();
+
+  // Call the analyze function from your service
+  const analysisResult = await analyze(file, fileName);
+  console.log("Analysis Result:", analysisResult);
+
+  const reportId = crypto.randomUUID();
+  resultMap.set(reportId, analysisResult);
+  return NextResponse.json({ reportId });
+}
+
+export { resultMap };

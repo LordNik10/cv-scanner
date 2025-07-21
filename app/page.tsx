@@ -37,9 +37,9 @@ export default function Home() {
                 del tuo CV
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Carica il tuo curriculum in PDF e ottieni un'analisi dettagliata
-                con stima della retribuzione basata su AI e dati di mercato
-                aggiornati.
+                Carica il tuo curriculum in PDF e ottieni un&apos;analisi
+                dettagliata con stima della retribuzione basata su AI e dati di
+                mercato aggiornati.
               </p>
             </div>
 
@@ -65,7 +65,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Cosa ottieni con l'analisi
+                Cosa ottieni con l&apos;analisi
               </h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 La nostra AI analizza il tuo CV e ti fornisce insights preziosi
@@ -252,7 +252,7 @@ export default function Home() {
                   <strong>Disclaimer:</strong> Le stime sono indicative e basate
                   su algoritmi di machine learning. Non costituiscono una
                   consulenza professionale e possono variare in base a numerosi
-                  fattori non considerati nell'analisi automatica.
+                  fattori non considerati nell&apos;analisi automatica.
                 </p>
               </CardContent>
             </Card>
