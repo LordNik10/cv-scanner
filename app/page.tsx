@@ -14,7 +14,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                CV Insight AI
+                CV Scanner
               </h1>
               <p className="text-sm text-gray-600">
                 Analisi intelligente del tuo curriculum
@@ -129,8 +129,8 @@ export default function Home() {
               </h3>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                 A differenza di altre piattaforme che richiedono account, email
-                e dati personali, con CV Insight AI basta un click per ottenere
-                la tua analisi professionale.
+                e dati personali, con CV Scanner basta un click per ottenere la
+                tua analisi professionale.
               </p>
             </div>
 
@@ -165,14 +165,14 @@ export default function Home() {
                 </div>
               </Card>
 
-              {/* CV Insight AI */}
+              {/* CV Scanner */}
               <Card className="p-6 bg-green-50 border-green-200">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <span className="text-green-600 text-2xl">✓</span>
                   </div>
                   <h4 className="text-lg font-semibold text-green-900 mb-4">
-                    CV Insight AI
+                    CV Scanner
                   </h4>
                   <div className="space-y-2 text-sm text-green-700">
                     <div className="flex items-center gap-2">
@@ -239,7 +239,7 @@ export default function Home() {
               <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl">
                 <Brain className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold">CV Insight AI</span>
+              <span className="text-xl font-bold">CV Scanner</span>
             </div>
             <p className="text-gray-400 mb-8">
               Powered by advanced AI algorithms and real-time market data

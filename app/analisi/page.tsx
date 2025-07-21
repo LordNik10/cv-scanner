@@ -419,8 +419,8 @@ export default function AnalisiPage() {
                 Soddisfatto dell'analisi?
               </h3>
               <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-                Condividi CV Insight AI con i tuoi colleghi e aiutali a scoprire
-                il valore del loro profilo professionale
+                Condividi CV Scanner con i tuoi colleghi e aiutali a scoprire il
+                valore del loro profilo professionale
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="secondary" size="lg">
