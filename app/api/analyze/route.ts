@@ -8,11 +8,11 @@ export async function POST(req: Request) {
   const { file, fileName } = await req.json();
 
   // Call the analyze function from your service
-  const analysisResult = await analyze(file, fileName);
-  console.log("Analysis Result:", analysisResult);
+  const { result } = await analyze(file, fileName);
+  console.log("Analysis Result:", result);
 
   const reportId = crypto.randomUUID();
-  resultMap.set(reportId, analysisResult);
+  resultMap.set(reportId, result);
   return NextResponse.json({ reportId });
 }
 

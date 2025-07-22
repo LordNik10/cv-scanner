@@ -13,5 +13,7 @@ export async function GET(
   }
 
   const report = resultMap.get(id);
-  return NextResponse.json(report);
+  const cleanStr = report.replace(/^```json\s*|\s*```$/g, "");
+  const obj = JSON.parse(cleanStr);
+  return NextResponse.json(obj);
 }

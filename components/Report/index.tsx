@@ -27,7 +27,7 @@ import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
 import { Separator } from "../ui/separator";
 
-interface CVAnalysis {
+export interface CVAnalysis {
   ruolo: string;
   settore: string;
   esperienza: number;
@@ -45,29 +45,8 @@ interface CVAnalysis {
   confidenceScore: number;
 }
 
-const mockValue: CVAnalysis = {
-  ruolo: "Sviluppatore Full Stack",
-  settore: "Tecnologia",
-  esperienza: Math.floor(Math.random() * 8) + 1,
-  localita: "Milano, Italia",
-  livello: "Middle",
-  titoloStudio: "Laurea in Informatica",
-  competenze: ["JavaScript", "React", "Node.js", "Python", "SQL", "Git"],
-  certificazioni: ["AWS Certified", "Google Cloud"],
-  ralStimata: {
-    min: 35000,
-    max: 55000,
-    media: 45000,
-  },
-  fileName: "",
-  confidenceScore: Math.floor(Math.random() * 20) + 80,
-};
-
 export function Report({ id }: { id: string }) {
   const { getReport, loading, report } = useGetReport(id);
-  const [mockAnalysis, setMockAnalysis] = useState<CVAnalysis | null>(
-    mockValue
-  );
   console.log({ report });
 
   const router = useRouter();
@@ -75,25 +54,6 @@ export function Report({ id }: { id: string }) {
   useEffect(() => {
     getReport();
   }, []);
-
-  useEffect(() => {
-    if (report) {
-      setMockAnalysis((prev) => ({
-        ...prev,
-        ruolo: mockValue.ruolo,
-        settore: mockValue.settore,
-        esperienza: mockValue.esperienza,
-        localita: mockValue.localita,
-        livello: mockValue.livello,
-        titoloStudio: mockValue.titoloStudio,
-        competenze: mockValue.competenze,
-        certificazioni: mockValue.certificazioni,
-        ralStimata: mockValue.ralStimata,
-        confidenceScore: mockValue.confidenceScore,
-        fileName: report.fileName,
-      }));
-    }
-  }, [report]);
 
   if (loading) {
     return (
@@ -129,7 +89,7 @@ export function Report({ id }: { id: string }) {
     );
   }
 
-  if (!mockAnalysis) {
+  if (!report) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <Card className="w-full max-w-md">
@@ -173,9 +133,7 @@ export function Report({ id }: { id: string }) {
                   <h1 className="text-2xl font-bold text-gray-900">
                     Analisi Completata
                   </h1>
-                  <p className="text-sm text-gray-600">
-                    {mockAnalysis.fileName}
-                  </p>
+                  <p className="text-sm text-gray-600">{report.fileName}</p>
                 </div>
               </div>
             </div>
@@ -208,15 +166,15 @@ export function Report({ id }: { id: string }) {
               <CardContent>
                 <div className="text-center">
                   <div className="text-4xl font-bold mb-2">
-                    €{mockAnalysis.ralStimata.media.toLocaleString()}
+                    €{report.ralStimata.media.toLocaleString()}
                   </div>
                   <div className="text-green-100 mb-4">
-                    Range: €{mockAnalysis.ralStimata.min.toLocaleString()} - €
-                    {mockAnalysis.ralStimata.max.toLocaleString()}
+                    Range: €{report.ralStimata.min.toLocaleString()} - €
+                    {report.ralStimata.max.toLocaleString()}
                   </div>
                   <div className="bg-white/20 rounded-full p-3">
                     <div className="text-sm">
-                      Basato su {mockAnalysis.esperienza} anni di esperienza
+                      Basato su {report.esperienza} anni di esperienza
                     </div>
                   </div>
                 </div>
@@ -235,13 +193,10 @@ export function Report({ id }: { id: string }) {
                       Confidence Score
                     </span>
                     <span className="font-semibold">
-                      {mockAnalysis.confidenceScore}%
+                      {report.confidenceScore}%
                     </span>
                   </div>
-                  <Progress
-                    value={mockAnalysis.confidenceScore}
-                    className="h-2"
-                  />
+                  <Progress value={report.confidenceScore} className="h-2" />
                   <p className="text-xs text-gray-500">
                     Basato sulla completezza e chiarezza delle informazioni nel
                     CV
@@ -269,10 +224,10 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Ruolo Attuale</div>
                       <div className="font-semibold text-lg">
-                        {mockAnalysis.ruolo}
+                        {report.ruolo}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {mockAnalysis.settore}
+                        {report.settore}
                       </div>
                     </div>
                   </div>
@@ -284,19 +239,19 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Esperienza</div>
                       <div className="font-semibold text-lg">
-                        {mockAnalysis.esperienza} anni
+                        {report.esperienza} anni
                       </div>
                       <Badge
                         variant={
-                          mockAnalysis.livello === "Senior"
+                          report.livello === "Senior"
                             ? "default"
-                            : mockAnalysis.livello === "Middle"
+                            : report.livello === "Middle"
                             ? "secondary"
                             : "outline"
                         }
                         className="mt-1"
                       >
-                        {mockAnalysis.livello}
+                        {report.livello}
                       </Badge>
                     </div>
                   </div>
@@ -308,7 +263,7 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Località</div>
                       <div className="font-semibold text-lg">
-                        {mockAnalysis.localita}
+                        {report.localita}
                       </div>
                     </div>
                   </div>
@@ -320,7 +275,7 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Formazione</div>
                       <div className="font-semibold text-lg">
-                        {mockAnalysis.titoloStudio}
+                        {report.titoloStudio}
                       </div>
                     </div>
                   </div>
@@ -334,7 +289,7 @@ export function Report({ id }: { id: string }) {
                     Competenze Tecniche
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {mockAnalysis.competenze.map((skill: any, index: any) => (
+                    {report.competenze.map((skill: any, index: any) => (
                       <Badge
                         key={index}
                         variant="secondary"
@@ -353,19 +308,17 @@ export function Report({ id }: { id: string }) {
                     Certificazioni
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {mockAnalysis.certificazioni.length > 0 ? (
-                      mockAnalysis.certificazioni.map(
-                        (cert: any, index: any) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="px-3 py-1"
-                          >
-                            <Award className="h-3 w-3 mr-1" />
-                            {cert}
-                          </Badge>
-                        )
-                      )
+                    {report.certificazioni.length > 0 ? (
+                      report.certificazioni.map((cert: any, index: any) => (
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="px-3 py-1"
+                        >
+                          <Award className="h-3 w-3 mr-1" />
+                          {cert}
+                        </Badge>
+                      ))
                     ) : (
                       <span className="text-gray-500 text-sm">
                         Nessuna certificazione rilevata

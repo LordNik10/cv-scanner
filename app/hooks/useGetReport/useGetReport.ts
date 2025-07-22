@@ -1,8 +1,8 @@
+import { CVAnalysis } from "@/components/Report";
 import { useState } from "react";
 
 export const useGetReport = (id: string) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [report, setReport] = useState<any>("");
+  const [report, setReport] = useState<CVAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
 
   const getReport = async () => {
