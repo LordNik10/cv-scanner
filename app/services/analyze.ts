@@ -7,6 +7,6 @@ export const analyze = async (file: string, fileName: string) => {
     return { result };
   } catch (error) {
     console.error("Errore durante l'analisi del file:", error);
-    throw new Error("Analisi fallita");
+    throw new Error(error instanceof Error ? error.message : "Unknown error");
   }
 };

@@ -31,10 +31,14 @@ export function Uploader() {
     if (!selectedFile) return;
 
     try {
-      const { reportId } = await analyzeFile(selectedFile, selectedFileName);
-      console.log("Report ID:", reportId);
+      const response = await analyzeFile(selectedFile, selectedFileName);
+      console.log("Report ID:", response);
 
-      router.push(`/analisi/${reportId}`);
+      if (!response || !response.reportId) {
+        return;
+      }
+
+      router.push(`/analisi/${response.reportId}`);
     } catch (error) {
       console.error("Errore durante l'analisi del file:", error);
     }

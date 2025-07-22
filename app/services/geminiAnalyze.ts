@@ -15,6 +15,6 @@ export async function geminiAnalyze(file: string, fileName: string) {
     return result.response.text().trim();
   } catch (error) {
     console.error("Error during analysis:", error);
-    throw new Error("Analysis failed");
+    throw new Error(error instanceof Error ? error.message : "Unknown error");
   }
 }
