@@ -6,6 +6,7 @@ const resultMap = new Map<string, any>();
 
 export async function POST(req: Request) {
   const { file, fileName } = await req.json();
+  console.log("Received file for analysis:", file);
 
   // Call the analyze function from your service
   const { result } = await analyze(file, fileName);

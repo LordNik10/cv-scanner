@@ -27,24 +27,6 @@ import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
 import { Separator } from "../ui/separator";
 
-export interface CVAnalysis {
-  ruolo: string;
-  settore: string;
-  esperienza: number;
-  localita: string;
-  livello: string;
-  titoloStudio: string;
-  competenze: string[];
-  certificazioni: string[];
-  ralStimata: {
-    min: number;
-    max: number;
-    media: number;
-  };
-  fileName: string;
-  confidenceScore: number;
-}
-
 export function Report({ id }: { id: string }) {
   const { getReport, loading, report } = useGetReport(id);
   console.log({ report });
@@ -166,15 +148,16 @@ export function Report({ id }: { id: string }) {
               <CardContent>
                 <div className="text-center">
                   <div className="text-4xl font-bold mb-2">
-                    €{report.ralStimata.media.toLocaleString()}
+                    €{report.estimated_salary_eur.average.toLocaleString()}
                   </div>
                   <div className="text-green-100 mb-4">
-                    Range: €{report.ralStimata.min.toLocaleString()} - €
-                    {report.ralStimata.max.toLocaleString()}
+                    Range: €{report.estimated_salary_eur.min.toLocaleString()} -
+                    €{report.estimated_salary_eur.max.toLocaleString()}
                   </div>
                   <div className="bg-white/20 rounded-full p-3">
                     <div className="text-sm">
-                      Basato su {report.esperienza} anni di esperienza
+                      Basato su {report.extracted_profile.years_experience} anni
+                      di esperienza
                     </div>
                   </div>
                 </div>
@@ -182,7 +165,7 @@ export function Report({ id }: { id: string }) {
             </Card>
 
             {/* Confidence Score */}
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Affidabilità Analisi</CardTitle>
               </CardHeader>
@@ -203,7 +186,7 @@ export function Report({ id }: { id: string }) {
                   </p>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Informazioni Dettagliate */}
@@ -224,10 +207,10 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Ruolo Attuale</div>
                       <div className="font-semibold text-lg">
-                        {report.ruolo}
+                        {report.extracted_profile.current_role}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {report.settore}
+                        {report.extracted_profile.industry}
                       </div>
                     </div>
                   </div>
@@ -239,19 +222,19 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Esperienza</div>
                       <div className="font-semibold text-lg">
-                        {report.esperienza} anni
+                        {report.extracted_profile.years_experience} anni
                       </div>
                       <Badge
                         variant={
-                          report.livello === "Senior"
+                          report.extracted_profile.level === "Senior"
                             ? "default"
-                            : report.livello === "Middle"
+                            : report.extracted_profile.level === "Middle"
                             ? "secondary"
                             : "outline"
                         }
                         className="mt-1"
                       >
-                        {report.livello}
+                        {report.extracted_profile.level}
                       </Badge>
                     </div>
                   </div>
@@ -263,7 +246,7 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Località</div>
                       <div className="font-semibold text-lg">
-                        {report.localita}
+                        {report.extracted_profile.location || "Non specificata"}
                       </div>
                     </div>
                   </div>
@@ -275,7 +258,7 @@ export function Report({ id }: { id: string }) {
                     <div>
                       <div className="text-sm text-gray-600">Formazione</div>
                       <div className="font-semibold text-lg">
-                        {report.titoloStudio}
+                        {report.extracted_profile.education}
                       </div>
                     </div>
                   </div>
@@ -289,15 +272,17 @@ export function Report({ id }: { id: string }) {
                     Competenze Tecniche
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {report.competenze.map((skill: any, index: any) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="px-3 py-1"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
+                    {report.extracted_profile.skills.map(
+                      (skill: any, index: any) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="px-3 py-1"
+                        >
+                          {skill}
+                        </Badge>
+                      )
+                    )}
                   </div>
                 </div>
 
@@ -308,17 +293,19 @@ export function Report({ id }: { id: string }) {
                     Certificazioni
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {report.certificazioni.length > 0 ? (
-                      report.certificazioni.map((cert: any, index: any) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="px-3 py-1"
-                        >
-                          <Award className="h-3 w-3 mr-1" />
-                          {cert}
-                        </Badge>
-                      ))
+                    {report.extracted_profile.certifications.length > 0 ? (
+                      report.extracted_profile.certifications.map(
+                        (cert: any, index: any) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="px-3 py-1"
+                          >
+                            <Award className="h-3 w-3 mr-1" />
+                            {cert}
+                          </Badge>
+                        )
+                      )
                     ) : (
                       <span className="text-gray-500 text-sm">
                         Nessuna certificazione rilevata

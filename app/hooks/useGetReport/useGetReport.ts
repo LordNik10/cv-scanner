@@ -1,8 +1,8 @@
-import { CVAnalysis } from "@/components/Report";
+import { AnalyzedFile } from "@/app/types";
 import { useState } from "react";
 
 export const useGetReport = (id: string) => {
-  const [report, setReport] = useState<CVAnalysis | null>(null);
+  const [report, setReport] = useState<AnalyzedFile | null>(null);
   const [loading, setLoading] = useState(false);
 
   const getReport = async () => {
