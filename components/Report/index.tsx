@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useGetReport } from "@/app/hooks/useGetReport/useGetReport";
+import { useAnalyze } from "@/app/hooks/useAnalyze/useAnalyze";
 import {
   ArrowLeft,
   Award,
@@ -14,7 +13,8 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -23,18 +23,29 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
 import { Separator } from "../ui/separator";
 
-export function Report({ id }: { id: string }) {
-  const { getReport, loading, report } = useGetReport(id);
-  console.log({ report });
-
+export function Report() {
+  const { analyzeFile, loading, report, error } = useAnalyze();
   const router = useRouter();
 
+  console.log({ report, error });
+
+  const getReport = async () => {
+    const file = sessionStorage.getItem("selectedFile");
+    const fileName = sessionStorage.getItem("selectedFileName");
+    if (file) {
+      await analyzeFile(file, fileName ?? "");
+    } else {
+      router.push("/");
+    }
+  };
+
   useEffect(() => {
+    console.log("useEffect triggered");
     getReport();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -71,7 +82,7 @@ export function Report({ id }: { id: string }) {
     );
   }
 
-  if (!report) {
+  if (!report || error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <Card className="w-full max-w-md">
@@ -284,10 +295,10 @@ export function Report({ id }: { id: string }) {
                                 }
                               </span>
                               <span className="text-sm font-semibold text-gray-900">
-                                {score}/100
+                                {score}/10
                               </span>
                             </div>
-                            <Progress value={score} className="h-2" />
+                            <Progress value={score * 10} className="h-2" />
                           </div>
                         );
                       }

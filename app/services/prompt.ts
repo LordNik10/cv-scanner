@@ -1,21 +1,3 @@
-const mockValue = {
-  ruolo: "Sviluppatore Full Stack",
-  settore: "Tecnologia",
-  esperienza: Math.floor(Math.random() * 8) + 1,
-  localita: "Milano, Italia",
-  livello: "Middle",
-  titoloStudio: "Laurea in Informatica",
-  competenze: ["JavaScript", "React", "Node.js", "Python", "SQL", "Git"],
-  certificazioni: ["AWS Certified", "Google Cloud"],
-  ralStimata: {
-    min: 35000,
-    max: 55000,
-    media: 53000,
-  },
-  fileName: "",
-  confidenceScore: Math.floor(Math.random() * 20) + 80,
-};
-
 export const PROMPT = (fileName: string) => `
 Sei un esperto HR con esperienza in selezione automatizzata (ATS), analisi di CV e valutazione di candidati.
 
@@ -60,9 +42,9 @@ Per ogni sezione con punteggio <7, suggerisci miglioramenti chiari e pratici.
 
 ---
 
-📦 Restituisci tutto il risultato in JSON con la seguente struttura:
+📦 Restituisci tutto il risultato in JSON con la seguente struttura e non mandare altro se non questo json:
 
-\`\`\`json
+
 {
   "role": "...",
   "industry": "...",
@@ -77,7 +59,7 @@ Per ogni sezione con punteggio <7, suggerisci miglioramenti chiari e pratici.
     "max": 0,
     "average": 0
   },
-  "fileName": "...",
+  "fileName": ${fileName},
   "confidenceScore": 0,
   "cvScore": {
     "overall": 0,
@@ -100,7 +82,4 @@ Per ogni sezione con punteggio <7, suggerisci miglioramenti chiari e pratici.
     }
   ]
 }
-
-
-\`\`\`
 `;

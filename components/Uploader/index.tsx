@@ -1,47 +1,42 @@
 "use client";
-import { Brain, FileText, Shield, Upload } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { useState } from "react";
+import { Brain, Shield, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAnalyze } from "@/app/hooks/useAnalyze/useAnalyze";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 
 export function Uploader() {
   const [selectedFile, setSelectedFile] = useState<string>("");
-  const [selectedFileName, setSelectedFileName] = useState<string>("");
+  // const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const { analyzeFile, loading } = useAnalyze();
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setSelectedFileName(file.name);
+  // const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+  //   setSelectedFileName(file.name);
 
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const text = event.target?.result;
-      if (typeof text === "string") {
-        setSelectedFile(text);
-      }
-    };
-    reader.readAsText(file);
-  };
+  //   const reader = new FileReader();
+  //   reader.onload = async (event) => {
+  //     const text = event.target?.result;
+  //     if (typeof text === "string") {
+  //       setSelectedFile(text);
+  //     }
+  //   };
+  //   reader.readAsText(file);
+  // };
 
   const handleAnalyze = async () => {
     if (!selectedFile) return;
-
+    setLoading(true);
     try {
-      const response = await analyzeFile(selectedFile, selectedFileName);
-      console.log("Report ID:", response);
-
-      if (!response || !response.reportId) {
-        return;
-      }
-
-      router.push(`/analisi/${response.reportId}`);
+      sessionStorage.setItem("selectedFile", JSON.stringify(selectedFile));
+      sessionStorage.setItem("selectedFileName", "");
+      router.push(`/analisi`);
     } catch (error) {
       console.error("Errore durante l'analisi del file:", error);
     }
+    setLoading(false);
   };
 
   return (
@@ -59,7 +54,7 @@ export function Uploader() {
           </div>
 
           <div className="relative">
-            <input
+            {/* <input
               type="file"
               accept=".pdf"
               onChange={handleFileChange}
@@ -76,7 +71,13 @@ export function Uploader() {
                   ? selectedFileName
                   : "Clicca per selezionare il PDF"}
               </span>
-            </label>
+            </label> */}
+            <textarea
+              value={selectedFile}
+              onChange={(e) => setSelectedFile(e.target.value)}
+              className="w-full h-32 p-2 border border-gray-300 rounded-lg resize-none"
+              placeholder="Incolla il testo del tuo CV qui..."
+            />
           </div>
 
           <div className="flex items-center justify-center gap-2 text-sm text-green-600 mb-4">

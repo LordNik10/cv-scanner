@@ -11,10 +11,9 @@ export async function POST(req: Request) {
     // Call the analyze function from your service
     const { result } = await analyze(file, fileName);
     console.log("Analysis Result:", result);
-
-    const reportId = crypto.randomUUID();
-    resultMap.set(reportId, result);
-    return NextResponse.json({ reportId });
+    const cleanStr = result.replace(/^```json\s*|\s*```$/g, "");
+    const obj = JSON.parse(cleanStr);
+    return NextResponse.json(obj);
   } catch (error) {
     if ((error as Error).message.includes("429")) {
       return NextResponse.json(
