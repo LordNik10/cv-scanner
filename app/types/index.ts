@@ -1,41 +1,35 @@
 export interface AnalyzedFile {
-  extracted_profile: ExtractedProfile;
-  estimated_salary_eur: EstimatedSalaryEur;
-  salary_estimation_reasoning: string;
-  fileName: string;
-  cv_evaluation: CvEvaluation;
-  improvement_suggestions: ImprovementSuggestions;
-}
-
-export interface ExtractedProfile {
-  current_role: string;
+  role: string;
   industry: string;
-  years_experience: number;
+  experience: number;
   location: string;
   level: string;
   education: string;
-  certifications: string[];
   skills: string[];
-}
-
-export interface EstimatedSalaryEur {
-  min: number;
-  max: number;
-  average: number;
-}
-
-export interface CvEvaluation {
-  ats_format: number;
-  education: number;
-  work_experience: number;
-  skills: number;
-  languages_certifications: number;
-  overall_impact: number;
-  total_score: number;
-}
-
-export interface ImprovementSuggestions {
-  ats_format: string;
-  skills: string;
-  languages_certifications: string;
+  certifications: string[];
+  estimatedRal: {
+    min: number;
+    max: number;
+    average: number;
+  };
+  fileName: string;
+  confidenceScore: number;
+  cvScore: {
+    overall: number;
+    sections: {
+      personalInfo: number;
+      experience: number;
+      skills: number;
+      education: number;
+      certifications: number;
+      formatting: number;
+    };
+  };
+  aiSuggestions: {
+    priority: "high" | "medium" | "low";
+    category: string;
+    title: string;
+    description: string;
+    impact: string;
+  }[];
 }

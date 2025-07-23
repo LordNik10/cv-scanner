@@ -9,7 +9,7 @@ export async function GET(
   console.log({ resultMap, id });
 
   if (!id || !resultMap.has(id)) {
-    return NextResponse.json({ error: "Report not found" }, { status: 404 });
+    return NextResponse.json(null, { status: 404 });
   }
 
   const report = resultMap.get(id);

@@ -64,37 +64,43 @@ Per ogni sezione con punteggio <7, suggerisci miglioramenti chiari e pratici.
 
 \`\`\`json
 {
-  "extracted_profile": {
-    "current_role": "...",
-    "industry": "...",
-    "years_experience": "...",
-    "location": "...",
-    "level": "...",
-    "education": "...",
-    "certifications": ["..."],
-    "skills": ["..."]
+  "role": "...",
+  "industry": "...",
+  "experience": 0,
+  "location": "...",
+  "level": "...",
+  "education": "...",
+  "skills": ["...", "..."],
+  "certifications": ["...", "..."],
+  "estimatedRal": {
+    "min": 0,
+    "max": 0,
+    "average": 0
   },
-  "fileName": "${fileName}",
-  "estimated_salary_eur": {
-    "min": "...",
-    "max": "...",
-    "average": "..."
+  "fileName": "...",
+  "confidenceScore": 0,
+  "cvScore": {
+    "overall": 0,
+    "sections": {
+      "personalInfo": 0,
+      "experience": 0,
+      "skills": 0,
+      "education": 0,
+      "certifications": 0,
+      "formatting": 0
+    }
   },
-  "salary_estimation_reasoning": "...",
-  "cv_evaluation": {
-    "ats_format": 8,
-    "education": 7,
-    "work_experience": 9,
-    "skills": 6,
-    "languages_certifications": 5,
-    "overall_impact": 7,
-    "total_score": 71
-  },
-  "improvement_suggestions": {
-    "ats_format": "...",
-    "skills": "...",
-    "languages_certifications": "..."
-  }
+  "aiSuggestions": [
+    {
+      "priority": "high",
+      "category": "...",
+      "title": "...",
+      "description": "...",
+      "impact": "..."
+    }
+  ]
 }
+
+
 \`\`\`
 `;
