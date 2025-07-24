@@ -1,46 +1,42 @@
 "use client";
-import { Brain, FileText, Shield, Upload } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { useState } from "react";
+import { Brain, Shield, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 
 export function Uploader() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<string>("");
+  // const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && file.type === "application/pdf") {
-      setSelectedFile(file);
-    } else {
-      alert("Per favore seleziona un file PDF valido");
-    }
-  };
+  // const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+  //   setSelectedFileName(file.name);
+
+  //   const reader = new FileReader();
+  //   reader.onload = async (event) => {
+  //     const text = event.target?.result;
+  //     if (typeof text === "string") {
+  //       setSelectedFile(text);
+  //     }
+  //   };
+  //   reader.readAsText(file);
+  // };
 
   const handleAnalyze = async () => {
     if (!selectedFile) return;
-
-    setIsUploading(true);
-
-    // Simulazione upload e processing
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Salva il file nel sessionStorage per la pagina di analisi
-    const reader = new FileReader();
-    reader.onload = () => {
-      sessionStorage.setItem(
-        "cvFile",
-        JSON.stringify({
-          name: selectedFile.name,
-          content: reader.result,
-          uploadTime: new Date().toISOString(),
-        })
-      );
-      router.push("/analisi");
-    };
-    reader.readAsText(selectedFile);
+    setLoading(true);
+    try {
+      sessionStorage.setItem("selectedFile", JSON.stringify(selectedFile));
+      sessionStorage.setItem("selectedFileName", "");
+      router.push(`/analisi`);
+    } catch (error) {
+      console.error("Errore durante l'analisi del file:", error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -58,10 +54,10 @@ export function Uploader() {
           </div>
 
           <div className="relative">
-            <input
+            {/* <input
               type="file"
               accept=".pdf"
-              onChange={handleFileSelect}
+              onChange={handleFileChange}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               id="cv-upload"
             />
@@ -71,11 +67,17 @@ export function Uploader() {
             >
               <FileText className="h-8 w-8 text-blue-500 mb-2" />
               <span className="text-sm text-blue-600 font-medium">
-                {selectedFile
-                  ? selectedFile.name
+                {selectedFileName
+                  ? selectedFileName
                   : "Clicca per selezionare il PDF"}
               </span>
-            </label>
+            </label> */}
+            <textarea
+              value={selectedFile}
+              onChange={(e) => setSelectedFile(e.target.value)}
+              className="w-full h-32 p-2 border border-gray-300 rounded-lg resize-none"
+              placeholder="Incolla il testo del tuo CV qui..."
+            />
           </div>
 
           <div className="flex items-center justify-center gap-2 text-sm text-green-600 mb-4">
@@ -87,11 +89,11 @@ export function Uploader() {
 
           <Button
             onClick={handleAnalyze}
-            disabled={!selectedFile || isUploading}
+            disabled={!selectedFile || loading}
             size="lg"
             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 text-lg"
           >
-            {isUploading ? (
+            {loading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3" />
                 Caricamento in corso...
