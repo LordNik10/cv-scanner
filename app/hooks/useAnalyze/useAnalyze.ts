@@ -26,7 +26,6 @@ export const useAnalyze = () => {
       }
 
       const data = await response.json();
-      console.log({ data });
 
       setReport(data);
     } catch (error) {
