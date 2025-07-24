@@ -152,6 +152,30 @@ export function Report() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {report.owner && (
+          <div className="mb-8">
+            <Card className="bg-gradient-to-r from-slate-50 to-gray-50 border-slate-200">
+              <CardContent className="py-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xl font-bold">
+                      {report.owner
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </span>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-1">
+                      {report.owner}
+                    </h2>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* RAL e Score */}
           <div className="lg:col-span-1 space-y-6">

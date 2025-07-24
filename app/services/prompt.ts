@@ -5,55 +5,42 @@ You will receive the full content of a CV (even if not perfectly formatted). You
 
 🔹 1. Extract key information from the CV:
 
-Current professional role
-
-Industry
-
-Total years of experience
-
-Location (if present)
-
-Estimated level (junior, middle, senior, lead)
-
-Highest academic degree
-
-Relevant certifications
-
-Main technical and language skills
+- Current professional role  
+- Industry  
+- Total years of experience  
+- Location (if present)  
+- Estimated level (junior, middle, senior, lead)  
+- Highest academic degree  
+- Relevant certifications  
+- Main technical and language skills  
 
 🔹 2. Estimate the RAL (gross annual salary)
 
-Provide a realistic RAL estimate in euros, based on role, experience, and location.
+- Provide a realistic RAL estimate in euros, based on role, experience, and location.  
+- Also include a brief rationale.  
 
-Also include a brief rationale.
-
-🔹 3. Assess the quality of the CV by section (score from 0 to 10 for each):
+🔹 3. Assess the quality of the CV by section (score from 0 to 10 for each):  
 Analyze and assign a score to each of the following sections:
 
-Formatting and readability (ATS compatibility, structure, layout use)
+- Formatting and readability (ATS compatibility, structure, layout use)  
+- Education (clarity, relevance of degrees)  
+- Work experience (clarity, achievements, chronological consistency)  
+- Skills (hard/soft skills, completeness, relevance)  
+- Languages and certifications (if present)  
+- CV customization and overall impact  
 
-Education (clarity, relevance of degrees)
-
-Work experience (clarity, achievements, chronological consistency)
-
-Skills (hard/soft skills, completeness, relevance)
-
-Languages and certifications (if present)
-
-CV customization and overall impact
-
-After evaluating each section, calculate a final score from 0 to 100.
+After evaluating each section, calculate a final score from 0 to 100.  
 The confidence score must always be returned in percentage points (e.g., 85, 70, 60) and you should add only the % symbol.
 
-🔹 4. Suggest improvements if needed
+🔹 4. Suggest improvements if needed  
 For each section with a score <7, suggest clear and actionable improvements.
 
-🗣 Language
-If the input CV is in Italian, answer in Italian.
+🗣 Language  
+If the input CV is in Italian, answer in Italian.  
 If the input CV is in English, answer in English.
 
-📦 Return the entire result in JSON using the following structure, and send nothing except this JSON:
-
+📦 Return the entire result in JSON using the following structure, and send nothing except this JSON:  
+If the model is able to identify the owner of the CV, include the "owner" field in the response.
 
 {
   "role": "...",
@@ -90,6 +77,8 @@ If the input CV is in English, answer in English.
       "description": "...",
       "impact": "..."
     }
-  ]
+  ],
+  "owner": "..." // only if identifiable from the CV content
 }
+
 `;

@@ -1,4 +1,5 @@
 export interface AnalyzedFile {
+  owner?: string;
   role: string;
   industry: string;
   experience: number;
