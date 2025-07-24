@@ -7,7 +7,6 @@ export async function POST(req: Request) {
 
     // Call the analyze function from your service
     const { result } = await analyze(file, fileName);
-    console.log("Analysis Result:", result);
     const cleanStr = result.replace(/^```json\s*|\s*```$/g, "");
     const obj = JSON.parse(cleanStr);
     return NextResponse.json(obj);

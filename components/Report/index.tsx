@@ -35,8 +35,6 @@ export function Report() {
 
   const [isDownloading, setIsDownloading] = useState(false);
 
-  console.log({ report, error });
-
   const getReport = async () => {
     const file = sessionStorage.getItem("selectedFile");
     const fileName = sessionStorage.getItem("selectedFileName");
@@ -48,7 +46,6 @@ export function Report() {
   };
 
   useEffect(() => {
-    console.log("useEffect triggered");
     getReport();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,5 +1,5 @@
 "use client";
-import { Brain, Shield, Upload } from "lucide-react";
+import { Brain, FileText, Shield, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -45,12 +45,14 @@ export function Uploader() {
         <div className="space-y-6">
           <div className="text-center">
             <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mb-4">
-              <Upload className="h-8 w-8 text-blue-600" />
+              <FileText className="h-8 w-8 text-blue-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Carica il tuo CV
+              Incolla il testo del tuo CV
             </h3>
-            <p className="text-gray-600">Supportiamo file PDF fino a 10MB</p>
+            <p className="text-gray-600">
+              Copia e incolla il contenuto testuale del tuo curriculum
+            </p>
           </div>
 
           <div className="relative">
@@ -75,8 +77,21 @@ export function Uploader() {
             <textarea
               value={selectedFile}
               onChange={(e) => setSelectedFile(e.target.value)}
-              className="w-full h-32 p-2 border border-gray-300 rounded-lg resize-none"
-              placeholder="Incolla il testo del tuo CV qui..."
+              placeholder={`Incolla qui il testo del tuo CV...
+              
+
+Esempio:
+Mario Rossi
+Sviluppatore Full Stack
+Email: mario.rossi@email.com
+Telefono: +39 123 456 7890
+
+ESPERIENZA LAVORATIVA
+Sviluppatore Senior presso TechCorp (2020-2024)
+- Sviluppo applicazioni web con React e Node.js
+- Gestione team di 3 sviluppatori junior
+...`}
+              className="w-full h-64 p-4 border-2 border-blue-300 rounded-lg resize-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
             />
           </div>
 

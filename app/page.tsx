@@ -37,7 +37,7 @@ export default function Home() {
                 del tuo CV
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Carica il tuo curriculum in PDF e ottieni un&apos;analisi
+                Incolla il testo del tuo curriculum e ottieni un&apos;analisi
                 dettagliata con stima della retribuzione basata su AI e dati di
                 mercato aggiornati.
               </p>
@@ -108,8 +108,8 @@ export default function Home() {
                   Accesso Immediato
                 </h4>
                 <p className="text-gray-600">
-                  Niente email, password o registrazioni. Carica il CV e ottieni
-                  subito i risultati
+                  Niente email, password o registrazioni. Incolla il testo del
+                  CV e ottieni subito i risultati
                 </p>
               </Card>
             </div>

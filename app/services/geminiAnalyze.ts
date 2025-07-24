@@ -50,7 +50,6 @@ export async function geminiAnalyze(file: string, fileName: string) {
       { text: PROMPT(fileName) },
       { text: file },
     ]);
-    console.log({ result: result.response.text() });
 
     return result.response.text().trim();
 
