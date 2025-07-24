@@ -186,10 +186,13 @@ export function Report() {
                       Confidence Score
                     </span>
                     <span className="font-semibold">
-                      {report.confidenceScore}%
+                      {report.confidenceScore * 100}%
                     </span>
                   </div>
-                  <Progress value={report.confidenceScore} className="h-2" />
+                  <Progress
+                    value={report.confidenceScore * 100}
+                    className="h-2"
+                  />
                   <p className="text-xs text-gray-500">
                     Basato sulla completezza e chiarezza delle informazioni nel
                     CV
@@ -559,7 +562,14 @@ export function Report() {
                 il valore del loro profilo professionale
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="secondary" size="lg">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  onClick={() => {
+                    const currentUrl = window.location.href;
+                    navigator.clipboard.writeText(currentUrl);
+                  }}
+                >
                   <Share2 className="h-5 w-5 mr-2" />
                   Condividi l&apos;app
                 </Button>
