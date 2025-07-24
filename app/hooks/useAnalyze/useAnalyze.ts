@@ -1,5 +1,6 @@
 import { AnalyzedFile } from "@/app/types";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const useAnalyze = () => {
   const [loading, setLoading] = useState(false);
@@ -30,6 +31,11 @@ export const useAnalyze = () => {
       setReport(data);
     } catch (error) {
       console.error("Errore durante l'analisi del file1:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Errore sconosciuto durante l'analisi del file"
+      );
       setError(true);
     } finally {
       setLoading(false);

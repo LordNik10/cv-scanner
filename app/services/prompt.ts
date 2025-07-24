@@ -43,6 +43,7 @@ Languages and certifications (if present)
 CV customization and overall impact
 
 After evaluating each section, calculate a final score from 0 to 100.
+The confidence score must always be returned in percentage points (e.g., 85, 70, 60) and you should add only the % symbol.
 
 🔹 4. Suggest improvements if needed
 For each section with a score <7, suggest clear and actionable improvements.

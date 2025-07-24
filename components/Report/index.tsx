@@ -25,6 +25,7 @@ import {
 } from "../ui/card";
 import { Progress } from "../ui/progress";
 import { Separator } from "../ui/separator";
+import { toast } from "sonner";
 
 export function Report() {
   const { analyzeFile, loading, report, error } = useAnalyze();
@@ -47,6 +48,12 @@ export function Report() {
     getReport();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleShare = () => {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl);
+    toast.success("Link copiato negli appunti!");
+  };
 
   if (loading) {
     return (
@@ -131,7 +138,7 @@ export function Report() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handleShare}>
                 <Share2 className="h-4 w-4 mr-2" />
                 Condividi
               </Button>
@@ -186,13 +193,10 @@ export function Report() {
                       Confidence Score
                     </span>
                     <span className="font-semibold">
-                      {report.confidenceScore * 100}%
+                      {report.confidenceScore}%
                     </span>
                   </div>
-                  <Progress
-                    value={report.confidenceScore * 100}
-                    className="h-2"
-                  />
+                  <Progress value={report.confidenceScore} className="h-2" />
                   <p className="text-xs text-gray-500">
                     Basato sulla completezza e chiarezza delle informazioni nel
                     CV
@@ -562,14 +566,7 @@ export function Report() {
                 il valore del loro profilo professionale
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={() => {
-                    const currentUrl = window.location.href;
-                    navigator.clipboard.writeText(currentUrl);
-                  }}
-                >
+                <Button variant="secondary" size="lg" onClick={handleShare}>
                   <Share2 className="h-5 w-5 mr-2" />
                   Condividi l&apos;app
                 </Button>
@@ -577,6 +574,7 @@ export function Report() {
                   variant="outline"
                   size="lg"
                   className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  onClick={() => router.push("/")}
                 >
                   Analizza un altro CV
                 </Button>
