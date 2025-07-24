@@ -1,9 +1,6 @@
 import { analyze } from "@/app/services/analyze";
 import { NextResponse } from "next/server";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const resultMap = new Map<string, any>();
-
 export async function POST(req: Request) {
   try {
     const { file, fileName } = await req.json();
@@ -28,5 +25,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-export { resultMap };
