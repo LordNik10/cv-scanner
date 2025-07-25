@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📄 CV Scanner
 
-## Getting Started
+CV Scanner is a **personal web application** built with [Next.js](https://nextjs.org/) that allows users to **paste their CV** as plain text and receive:
 
-First, run the development server:
+- ✅ A detailed analysis with feedback and suggestions
+- 📊 A section-based CV score (0–100)
+- 💶 An estimated RAL (gross annual salary) based on the profile
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The analysis is powered by **Gemini 2.0 Flash**, a lightweight and fast language model that performs smart extraction and evaluation of CV data.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Live Demo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Hosted on Vercel** – try it live:  
+➡️ [https://cv-scanner-lyart.vercel.app/](https://cv-scanner-lyart.vercel.app/)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔍 How It Works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. The user pastes the content of their CV (in **Italian or English**) into a text area
+2. The app sends the input to the Gemini 2.0 Flash model
+3. The AI:
+   - Extracts key career info (role, skills, experience, location, education, etc.)
+   - Estimates the RAL based on market data
+   - Evaluates each section of the CV with a score
+   - Returns a JSON with all results and personalized suggestions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> ✨ The app auto-detects the language and replies in the same language as the input.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧠 Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js** – React framework for the frontend and API routes
+- **TypeScript** – type-safe codebase
+- **Gemini 2.0 Flash** – for intelligent CV analysis
+- **Tailwind CSS** – utility-first styling
+- **Vercel** – deployment and hosting
+
+---
+
+## 💡 Features
+
+- Paste-only input (no file uploads needed)
+- Clean and minimal UI
+- Real-time response with loading state
+- JSON structure results for easy parsing and future extension
+- Accurate RAL estimation with market context
+- Scoring system with improvement suggestions if needed
+
+---
+
+## 🔒 Privacy & Disclaimer
+
+This is a **personal project**, developed for experimentation and learning purposes.
+
+- 🧠 CV analysis is performed **in-memory only**, and no user data is stored or shared.
+- 🧾 CV content is processed only to generate an AI-based response. No information is logged.
+- 📊 RAL estimates and CV evaluations are **AI-generated** and should be considered **informative, not definitive**.
+- 💼 This tool does **not replace a career consultant** or certified HR professional.
+
+> ⚠️ Use CV Scanner as a **guideline** to improve your resume — not as an official assessment or salary negotiation tool.
+
+---
