@@ -45,6 +45,17 @@ export default function RootLayout({
           `,
           }}
         />
+
+        <Script
+          id="iubenda-cs"
+          dangerouslySetInnerHTML={{
+            __html: `var _iub = _iub || [];
+_iub.csConfiguration = {"siteId":4181211,"cookiePolicyId":67759919,"lang":"it","storage":{"useSiteId":true}};`,
+          }}
+        />
+
+        <Script src="https://cs.iubenda.com/autoblocking/4181211.js" />
+        <Script src="//cdn.iubenda.com/cs/iubenda_cs.js" async />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
