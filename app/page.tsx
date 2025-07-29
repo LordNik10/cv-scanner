@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Uploader } from "@/components/Uploader";
 import { Brain, Shield, TrendingUp, Zap } from "lucide-react";
+import Script from "next/script";
 
 export default function Home() {
   return (
@@ -256,6 +257,54 @@ export default function Home() {
                 </p>
               </CardContent>
             </Card>
+            <div className="w-full flex flex-row justify-end mt-6">
+              <a
+                href="https://www.iubenda.com/privacy-policy/67759919"
+                className="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe"
+                title="Privacy Policy"
+              >
+                Privacy Policy
+              </a>
+              <Script
+                src="https://cdn.iubenda.com/iubenda.js"
+                type="text/javascript"
+                id="iubenda-embed"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    (function (w, d) {
+                      var loader = function () {
+                        var s = d.createElement("script"),
+                          tag = d.getElementsByTagName("script")[0];
+                        s.src = "https://cdn.iubenda.com/iubenda.js";
+                        tag.parentNode.insertBefore(s, tag);
+                      };
+                      if (w.addEventListener) {
+                        w.addEventListener("load", loader, false);
+                      } else if (w.attachEvent) {
+                        w.attachEvent("onload", loader);
+                      } else {
+                        w.onload = loader;
+                      }
+                    })(window, document);
+                  `,
+                }}
+              />
+              <a
+                href="https://www.iubenda.com/privacy-policy/67759919/cookie-policy"
+                className="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe"
+                title="Cookie Policy"
+              >
+                Cookie Policy
+              </a>
+              <Script
+                id="iubenda-embed"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    (function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);
+                `,
+                }}
+              />
+            </div>
           </div>
         </div>
       </footer>
