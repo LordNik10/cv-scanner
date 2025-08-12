@@ -7,24 +7,25 @@ import { Card, CardContent } from "../ui/card";
 
 export function Uploader() {
   const [selectedFile, setSelectedFile] = useState<string>("");
-  // const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [selectedFileName, setSelectedFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  // const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (!file) return;
-  //   setSelectedFileName(file.name);
+  console.log(selectedFile);
 
-  //   const reader = new FileReader();
-  //   reader.onload = async (event) => {
-  //     const text = event.target?.result;
-  //     if (typeof text === "string") {
-  //       setSelectedFile(text);
-  //     }
-  //   };
-  //   reader.readAsText(file);
-  // };
+  async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const arrayBuffer = await file.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    // Manda i byte grezzi al backend in Base64
+    const base64 = Buffer.from(uint8Array).toString("base64");
+
+    setSelectedFile(base64);
+    setSelectedFileName(file.name);
+  }
 
   const handleAnalyze = async () => {
     if (!selectedFile) return;
@@ -56,10 +57,10 @@ export function Uploader() {
           </div>
 
           <div className="relative">
-            {/* <input
+            <input
               type="file"
               accept=".pdf"
-              onChange={handleFileChange}
+              onChange={handleFileUpload}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               id="cv-upload"
             />
@@ -73,8 +74,8 @@ export function Uploader() {
                   ? selectedFileName
                   : "Clicca per selezionare il PDF"}
               </span>
-            </label> */}
-            <textarea
+            </label>
+            {/* <textarea
               value={selectedFile}
               onChange={(e) => setSelectedFile(e.target.value)}
               placeholder={`Incolla qui il testo del tuo CV...
@@ -92,7 +93,7 @@ Sviluppatore Senior presso TechCorp (2020-2024)
 - Gestione team di 3 sviluppatori junior
 ...`}
               className="w-full h-64 p-4 border-2 border-blue-300 rounded-lg resize-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
-            />
+            /> */}
           </div>
 
           <div className="flex items-center justify-center gap-2 text-sm text-green-600 mb-4">
