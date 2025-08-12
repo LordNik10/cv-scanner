@@ -4,23 +4,30 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { file, fileName } = await req.json();
+    const { file, fileName, inputMode } = await req.json();
 
     // Call the analyze function from your service
 
     console.log("Received file:");
 
-    const textPdf = await extractTextFromPdfString(file);
-    console.log("Extracted text:", textPdf);
+    let textPdf: string | null = null;
 
-    if (textPdf === null) {
-      return NextResponse.json(
-        { error: "Failed to extract text from PDF" },
-        { status: 400 }
-      );
+    if ((inputMode as "text" | "upload") === "upload") {
+      textPdf = await extractTextFromPdfString(file);
+      console.log("Extracted text:", textPdf);
+
+      if (textPdf === null) {
+        return NextResponse.json(
+          { error: "Failed to extract text from PDF" },
+          { status: 400 }
+        );
+      }
     }
 
-    const { result } = await analyze(textPdf, fileName);
+    const { result } = await analyze(
+      (inputMode as "text" | "upload") === "upload" ? textPdf : file,
+      fileName
+    );
     const cleanStr = result.replace(/^```json\s*|\s*```$/g, "");
     const obj = JSON.parse(cleanStr);
     return NextResponse.json(obj);

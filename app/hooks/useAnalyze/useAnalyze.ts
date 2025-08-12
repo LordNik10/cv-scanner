@@ -7,7 +7,11 @@ export const useAnalyze = () => {
   const [report, setReport] = useState<AnalyzedFile | null>(null);
   const [error, setError] = useState<boolean>(false);
 
-  const analyzeFile = async (file: string, fileName: string) => {
+  const analyzeFile = async (
+    file: string,
+    fileName: string,
+    inputMode: "text" | "upload"
+  ) => {
     setLoading(true);
     try {
       const response = await fetch("/api/analyze", {
@@ -15,7 +19,7 @@ export const useAnalyze = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ file, fileName: fileName }),
+        body: JSON.stringify({ file, fileName, inputMode }),
       });
       if (response.status === 429) {
         throw new Error("Quota exceeded. Please try again later.");

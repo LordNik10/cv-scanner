@@ -38,8 +38,9 @@ export function Report() {
   const getReport = async () => {
     const file = sessionStorage.getItem("selectedFile");
     const fileName = sessionStorage.getItem("selectedFileName");
+    const inputMode = sessionStorage.getItem("inputMode");
     if (file) {
-      await analyzeFile(file, fileName ?? "");
+      await analyzeFile(file, fileName ?? "", inputMode as "text" | "upload");
     } else {
       router.push("/");
     }
