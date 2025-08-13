@@ -7,7 +7,7 @@ import { Card, CardContent } from "../ui/card";
 
 export function Uploader() {
   const [selectedFile, setSelectedFile] = useState<string>("");
-  const [inputMode, setInputMode] = useState<"text" | "upload">("text");
+  const [inputMode, setInputMode] = useState<"text" | "upload">("upload");
   const [selectedFileName, setSelectedFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -52,19 +52,8 @@ export function Uploader() {
         <div className="bg-white/70 backdrop-blur-sm rounded-full p-1 border border-gray-200 shadow-lg">
           <div className="flex items-center">
             <button
-              onClick={() => setInputMode("text")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all ${
-                inputMode === "text"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "text-gray-600 hover:text-blue-600"
-              }`}
-            >
-              <FileText className="h-4 w-4" />
-              Incolla Testo
-            </button>
-            <button
               onClick={() => setInputMode("upload")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium cursor-pointer transition-all ${
                 inputMode === "upload"
                   ? "bg-blue-600 text-white shadow-md"
                   : "text-gray-600 hover:text-blue-600"
@@ -72,6 +61,17 @@ export function Uploader() {
             >
               <Upload className="h-4 w-4" />
               Carica PDF
+            </button>
+            <button
+              onClick={() => setInputMode("text")}
+              className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium cursor-pointer transition-all ${
+                inputMode === "text"
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "text-gray-600 hover:text-blue-600"
+              }`}
+            >
+              <FileText className="h-4 w-4" />
+              Incolla Testo
             </button>
           </div>
         </div>
