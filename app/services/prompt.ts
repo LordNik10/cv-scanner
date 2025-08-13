@@ -18,6 +18,7 @@ You will receive the full content of a CV (even if not perfectly formatted). You
 
 - Provide a realistic RAL estimate in euros, based on role, experience, and location.  
 - Also include a brief rationale.  
+- Return the sources of your information.
 
 🔹 3. Assess the quality of the CV by section (score from 0 to 10 for each):  
 Analyze and assign a score to each of the following sections:
@@ -78,6 +79,7 @@ If the model is able to identify the owner of the CV, include the "owner" field 
       "impact": "..."
     }
   ],
+  "sources": ["...", "..."],
   "owner": "..." // only if identifiable from the CV content
 }
 

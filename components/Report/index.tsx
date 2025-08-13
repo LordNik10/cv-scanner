@@ -294,6 +294,35 @@ export function Report() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Data Sources Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <div className="p-2 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg">
+                      <TrendingUp className="h-5 w-5 text-orange-600" />
+                    </div>
+                    Fonti Dati per Stima RAL
+                  </CardTitle>
+                  <CardDescription>
+                    Le nostre stime si basano su dati aggiornati provenienti da
+                    fonti autorevoli
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {report.sources.map((source, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border"
+                      >
+                        <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                        <span className="text-sm text-gray-700">{source}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* CV Score Breakdown */}
