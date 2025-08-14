@@ -321,6 +321,24 @@ export function Report() {
                       </div>
                     ))}
                   </div>
+
+                  <Separator className="my-6" />
+
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <TrendingUp className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-blue-900 mb-2">
+                          Metodologia di Calcolo
+                        </h4>
+                        <div className="text-sm text-blue-800 space-y-2">
+                          <p>{report.algorithm}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
