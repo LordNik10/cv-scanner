@@ -6,15 +6,10 @@ export async function POST(req: Request) {
   try {
     const { file, fileName, inputMode } = await req.json();
 
-    // Call the analyze function from your service
-
-    console.log("Received file:");
-
     let textPdf: string | null = null;
 
     if ((inputMode as "text" | "upload") === "upload") {
       textPdf = await extractTextFromPdfString(file);
-      console.log("Extracted text:", textPdf);
 
       if (textPdf === null) {
         return NextResponse.json(

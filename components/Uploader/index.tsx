@@ -12,8 +12,6 @@ export function Uploader() {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  console.log(selectedFile);
-
   async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
