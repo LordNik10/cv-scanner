@@ -19,7 +19,6 @@ export function Uploader() {
     const arrayBuffer = await file.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
 
-    // Manda i byte grezzi al backend in Base64
     const base64 = Buffer.from(uint8Array).toString("base64");
 
     setSelectedFile(base64);

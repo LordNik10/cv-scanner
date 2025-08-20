@@ -72,7 +72,7 @@ export function Report() {
       throw new Error(`Element with id ${elementToPrintId} not found`);
     }
 
-    const canvas = await html2canvas(element, { scale: 3 }); // qualità alta
+    const canvas = await html2canvas(element, { scale: 3 });
     const data = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF({
@@ -91,11 +91,11 @@ export function Report() {
     let heightLeft = imgHeight;
     let position = 0;
 
-    // Prima pagina
+    // First Page
     pdf.addImage(data, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pdfHeight;
 
-    // Aggiunge pagine se necessario
+    // Adds pages if necessary
     while (heightLeft > 0) {
       position = heightLeft - imgHeight;
       pdf.addPage();
@@ -644,6 +644,14 @@ export function Report() {
                           <p className="text-sm text-gray-700 mb-3">
                             {suggestion.description}
                           </p>
+                          {suggestion.description.includes("ATS") && (
+                            <p className="text-sm text-gray-700 mb-3">
+                              Fonte ATS:{" "}
+                              <a target="_blank" href={report.atsSource}>
+                                {report.atsSource}
+                              </a>
+                            </p>
+                          )}
 
                           <div className="flex items-center gap-2 text-xs">
                             <TrendingUp className="h-3 w-3 text-green-600" />

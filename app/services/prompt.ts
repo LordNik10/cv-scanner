@@ -19,7 +19,7 @@ You will receive the full content of a CV (even if not perfectly formatted). You
 - Provide a realistic RAL estimate in euros, based on role, experience, and location.  
 - Also include a brief rationale.  
 - Return the sources of your information.
-- Include the algorithm used for estimation in the language used in the CV.
+- Include the algorithm used for estimation. Use Italian as default. If the input CV is in Italian, answer in Italian. If the input CV is in English, answer in English.
 
 🔹 3. Assess the quality of the CV by section (score from 0 to 10 for each):  
 Analyze and assign a score to each of the following sections:
@@ -36,6 +36,8 @@ The confidence score must always be returned in percentage points (e.g., 85, 70,
 
 🔹 4. Suggest improvements if needed  
 For each section with a score <7, suggest clear and actionable improvements.
+
+🔹 5. Return the ATS source as a website link where this analysis was made
 
 🗣 Language  
 If the input CV is in Italian, answer in Italian.  
@@ -80,6 +82,7 @@ If the model is able to identify the owner of the CV, include the "owner" field 
       "impact": "..."
     }
   ],
+  "atsSource": "...",
   "sources": ["...", "..."],
   "algorithm": "...",
   "owner": "..." // only if identifiable from the CV content
