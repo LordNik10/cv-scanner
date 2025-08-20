@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "CvScanner",
   description:
-    "Carica il tuo curriculum in PDF e ottieni un'analisi dettagliata con stima della retribuzione basata su AI e dati di mercato aggiornati.",
+    "Copia e incolla il testo del tuo CV e ottieni un'analisi dettagliata con stima della retribuzione basata su AI e dati di mercato aggiornati.",
 };
 
 export default function RootLayout({

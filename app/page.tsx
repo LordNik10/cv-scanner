@@ -253,7 +253,10 @@ export default function Home() {
                   <strong>Disclaimer:</strong> Le stime sono indicative e basate
                   su algoritmi di machine learning. Non costituiscono una
                   consulenza professionale e possono variare in base a numerosi
-                  fattori non considerati nell&apos;analisi automatica.
+                  fattori non considerati nell&apos;analisi automatica. I dati
+                  forniti dall’utente non vengono salvati in alcun database e
+                  sono utilizzati esclusivamente per elaborare la risposta alla
+                  richiesta.
                 </p>
               </CardContent>
             </Card>

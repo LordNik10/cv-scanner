@@ -38,8 +38,9 @@ export function Report() {
   const getReport = async () => {
     const file = sessionStorage.getItem("selectedFile");
     const fileName = sessionStorage.getItem("selectedFileName");
+    const inputMode = sessionStorage.getItem("inputMode");
     if (file) {
-      await analyzeFile(file, fileName ?? "");
+      await analyzeFile(file, fileName ?? "", inputMode as "text" | "upload");
     } else {
       router.push("/");
     }
@@ -71,7 +72,7 @@ export function Report() {
       throw new Error(`Element with id ${elementToPrintId} not found`);
     }
 
-    const canvas = await html2canvas(element, { scale: 3 }); // qualità alta
+    const canvas = await html2canvas(element, { scale: 3 });
     const data = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF({
@@ -90,11 +91,11 @@ export function Report() {
     let heightLeft = imgHeight;
     let position = 0;
 
-    // Prima pagina
+    // First Page
     pdf.addImage(data, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pdfHeight;
 
-    // Aggiunge pagine se necessario
+    // Adds pages if necessary
     while (heightLeft > 0) {
       position = heightLeft - imgHeight;
       pdf.addPage();
@@ -290,6 +291,53 @@ export function Report() {
                       Basato sulla completezza e chiarezza delle informazioni
                       nel CV
                     </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Data Sources Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <div className="p-2 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg">
+                      <TrendingUp className="h-5 w-5 text-orange-600" />
+                    </div>
+                    Fonti Dati per Stima RAL
+                  </CardTitle>
+                  <CardDescription>
+                    Le nostre stime si basano su dati aggiornati provenienti da
+                    fonti autorevoli
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {report.sources.map((source, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border"
+                      >
+                        <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                        <span className="text-sm text-gray-700">{source}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Separator className="my-6" />
+
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <TrendingUp className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-blue-900 mb-2">
+                          Metodologia di Calcolo
+                        </h4>
+                        <div className="text-sm text-blue-800 space-y-2">
+                          <p>{report.algorithm}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -596,6 +644,14 @@ export function Report() {
                           <p className="text-sm text-gray-700 mb-3">
                             {suggestion.description}
                           </p>
+                          {suggestion.description.includes("ATS") && (
+                            <p className="text-sm text-gray-700 mb-3">
+                              Fonte ATS:{" "}
+                              <a target="_blank" href={report.atsSource}>
+                                {report.atsSource}
+                              </a>
+                            </p>
+                          )}
 
                           <div className="flex items-center gap-2 text-xs">
                             <TrendingUp className="h-3 w-3 text-green-600" />
