@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Uploader } from "@/components/Uploader";
 import { Brain, Shield, TrendingUp, Zap } from "lucide-react";
+import Link from "next/link";
 import Script from "next/script";
 
 export default function Home() {
@@ -249,14 +250,27 @@ export default function Home() {
             {/* Disclaimer */}
             <Card className="bg-yellow-900/20 border-yellow-700/30 max-w-4xl mx-auto">
               <CardContent className="py-4">
-                <p className="text-sm text-yellow-200">
+                <p id="terms" className="text-sm text-yellow-200">
                   <strong>Disclaimer:</strong> Le stime sono indicative e basate
                   su algoritmi di machine learning. Non costituiscono una
                   consulenza professionale e possono variare in base a numerosi
                   fattori non considerati nell&apos;analisi automatica. I dati
-                  forniti dall’utente non vengono salvati in alcun database e
-                  sono utilizzati esclusivamente per elaborare la risposta alla
-                  richiesta.
+                  forniti dall’utente non vengono salvati in alcun database né
+                  archiviati in alcun modo dal creatore di questa applicazione:
+                  vengono utilizzati esclusivamente per elaborare la risposta
+                  alla richiesta. L&apos;elaborazione dei dati viene effettuata
+                  tramite il modello Gemini 2.0 Flash di Google, che può
+                  accedere ai contenuti forniti dall’utente per generare la
+                  risposta. I dati sono quindi trattati secondo le politiche di
+                  privacy di Google, consultabili al seguente link:{" "}
+                  <Link
+                    className="underline"
+                    target="_blank"
+                    href="https://policies.google.com/privacy"
+                  >
+                    https://policies.google.com/privacy
+                  </Link>
+                  .
                 </p>
               </CardContent>
             </Card>

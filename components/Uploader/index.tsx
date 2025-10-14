@@ -4,12 +4,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import Link from "next/link";
+import { Checkbox } from "../ui/checkbox";
 
 export function Uploader() {
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [inputMode, setInputMode] = useState<"text" | "upload">("upload");
   const [selectedFileName, setSelectedFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState(false);
   const router = useRouter();
 
   async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -112,15 +115,33 @@ export function Uploader() {
               </div>
 
               <div className="flex items-center justify-center gap-2 text-sm text-green-600 mb-4">
-                <Shield className="h-4 w-4" />
-                <span className="font-medium">
-                  Nessuna registrazione • Analisi immediata
-                </span>
+                <div className="flex flex-col">
+                  <div className="flex flex-row items-center gap-1">
+                    <Shield className="h-4 w-4" />
+                    <span className="font-medium">
+                      Nessuna registrazione • Analisi immediata
+                    </span>
+                  </div>
+                  <div className="flex flex-row items-center gap-2">
+                    <Checkbox
+                      checked={isChecked}
+                      onCheckedChange={(checked) => setIsChecked(!!checked)}
+                      className="border-green-600 focus:ring-green-500 data-[state=checked]:bg-white data-[state=checked]:border-green-600 data-[state=checked]:text-green-600"
+                    />
+                    <span>
+                      Accetta i{" "}
+                      <Link href="#terms" className="underline">
+                        Termini
+                      </Link>{" "}
+                      per effettuare l&apos;analisi
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <Button
                 onClick={handleAnalyze}
-                disabled={!selectedFile || loading}
+                disabled={!selectedFile || loading || !isChecked}
                 size="lg"
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 text-lg"
               >
